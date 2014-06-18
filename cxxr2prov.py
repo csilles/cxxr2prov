@@ -3,42 +3,7 @@
 cxxr2prov: A program to extract provenance information from a CXXR XML
            serialisation, and output an RDF Turtle representation of a PROV
            graph.
-Chris A. Silles <c@sill.es> June 2014
-
-The algorithm implemented uses a "iterative parsing" approach to XML
-processing, which prevents the entire XML tree from being stored in memory and
-instead processes `events' such as `start' and `end' of elements. It achieves
-this by maintaining in memory only the elements of a subtree rooted in a node
-in which we are 'interested'. Because these elements may potentially appear in
-any tag---e.g. a CXXR::Symbol is likely to be defined in the <m_command> tag of
-a CXXR::Provenance as well as the <symbol> tag of a Frame::Binding---it is
-necessary to determine the type of an element by inspecting its `class_id'
-attribute as given by boost::serialization. Conversely, those elements in which
-we are not interested, will be cleared so their memory is released.
-
-Inside an interested node, all nodes will be recorded (i.e. not cleared). A
-mechanism has been included to manually `inhibit' this recording and clear
-nodes between certain tags. This was introduced to prevent the <m_value> node
-of a xenogenous Provenance being stored in memory. A list of tags to inhibit is
-maintained.
-
-Although it should, in theory[1], be possible at the `start' of an element to
-look ahead (using XPath), in practice did not always work and some of the
-elements were truncated. For this reason, we will wait until the `end' of an
-element.
-
-- Define a list of 'classes of interest': these are CXXR::Symbol,
-  CXXR::Provenance, CXXR::CommandChronicle.
-- Loop for
-- On encountering the start of an element `elem':
-  * If it has a `class_name' attribute, check if it is a 'class of interest',
-    in which case record its `class_id'
-  * If the tag of `elem' is in the list of inhibitor tags: increment inhibitor
-    countwhich if is > 0,
-  * If inhibitor count > 0: continue
-  * If its class_id is of interest: fire a
-
-[1] http://www.ibm.com/developerworks/xml/library/x-hiperfparse/
+Chris A. Silles <casilles@gmail.com>
 """
 
 
@@ -163,8 +128,6 @@ class CXXR2PROV:
 
             if elem.tag in self.inhibitors:
                 self.inhibitors.remove(elem.tag)
-                #print "Inhibitor removed from tag {} at element {:,}"\
-                #  .format(elem.tag, self.count_elements_processed)
                 return
 
             inhibit = len(self.inhibitors) > 0
@@ -199,8 +162,6 @@ class CXXR2PROV:
             if elem.tag in self.inhibitor_queue:
                 self.inhibitor_queue.remove(elem.tag)
                 self.inhibitors.append(elem.tag)
-                #print "Inhibitor added for tag {} at element {:,}"\
-                #  .format(elem.tag, self.count_elements_processed)
                 return
 
             recording = self.interest_count > 0
