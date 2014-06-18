@@ -1,0 +1,11 @@
+SPARQLWrapper==1.6.0
+argparse==1.2.1
+args==0.1.0
+clint==0.3.7
+html5lib==0.999
+isodate==0.5.0
+lxml==3.3.5
+pyparsing==2.0.2
+rdflib==4.1.2
+six==1.7.2
+wsgiref==0.1.2
