@@ -20,12 +20,12 @@ class Provenance:
         self.chronicle = None
         self.symbol = None
 
-        #self.establish_URIRef()
-
     def __str__(self):
-        return "Provenance. Symbol ID '" + self.sym_id + "', Timestamp '" + self.timestamp +"' " + \
-               "CCOID '" + self.ccoid + "', URI ' + " + repr(self.URI) + "' " + \
-               "Chronicle '" + repr(self.chronicle) + "', Symbol '" + repr(self.symbol) +"'"
+        return "Provenance: Symbol ID {}; Timestamp {}; Chron ID {}; " + \
+               "URI {}; Chronicle {}; Symbol {};"\
+                 .format(self.sym_id, self.timestamp, self.ccoid, \
+                         repr(self.URI), repr(self.chronicle), \
+                         repr(self.symbol))
 
     def establish_URIRef (self):
         # Dereference the symbol id
