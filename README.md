@@ -7,8 +7,8 @@ The objective of this program is to take a
 from it [PROV-O](http://www.w3.org/TR/prov-o/) in
 [Turtle](http://www.w3.org/TeamSubmission/turtle/).
 
-**This program is intended to work with my (as yet non-existant) `prov` branch
-of cxxr**
+**This program is intended to work (currently) with my
+[prov](https://github.com/csilles/cxxr/tree/prov) branch of cxxr**
 
 ## Features
 * XML stream-parsing algorithm enables parsing of large (several GB) XML files,
